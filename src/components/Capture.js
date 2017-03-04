@@ -114,7 +114,7 @@ return formData;
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
           'Ocp-Apim-Subscription-Key': '6f78b17610934d4d92064d76d5ba6d19'
         },
         body: this.getImageFormData(this.props.capture.imagePath)
