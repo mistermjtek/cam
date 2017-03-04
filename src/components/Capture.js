@@ -102,7 +102,24 @@ class Capture extends React.Component {
 
   confirm() {
     if (this.props.capture.imagePath) {
-      // this.props.navigator.push({ title: 'PetMatcher' });
+      console.log(this.props.capture.imagePath);
+      fetch('https://westus.api.cognitive.microsoft.com/vision/v1.0/analyze?visualFeatures=Categories,Description', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Ocp-Apim-Subscription-Key': '6f78b17610934d4d92064d76d5ba6d19'
+        },
+        body: JSON.stringify({
+          url: 'http://r.ddmcdn.com/s_f/o_1/cx_633/cy_0/cw_1725/ch_1725/w_720/APL/uploads/2014/11/too-cute-doggone-it-video-playlist.jpg'
+        })
+      }).then((response) => response.json())
+      .then((responseJson) => {
+        return console.log(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     }
   }
 }
