@@ -28,7 +28,7 @@ export default class Menu extends React.Component {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <TouchableOpacity
-          onPress={() => this.props.navigator.push({ title: 'Camera' })}
+          onPress={() => this.props.navigator.push({ title: 'Capture' })}
           >
           <Animated.Image
             style={{ height: 170, width: 170, transform: [{ scale: this.state.cameraScale }] }}

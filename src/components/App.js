@@ -9,12 +9,12 @@ import { createStore, applyMiddleware } from 'redux';
 
 import rootReducer from '../reducers';
 import Menu from './Menu';
-import Camera from './Camera';
+import Capture from './Capture';
 import History from './History';
 
 const ROUTES = {
   Menu,
-  Camera,
+  Capture,
   History
 };
 
