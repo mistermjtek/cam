@@ -100,6 +100,13 @@ class Capture extends React.Component {
     }).start();
   }
 
+  getImageFormData(img) {
+const formData = new FormData();
+
+formData.append("file", { uri: img, type: "image/jpg" });
+return formData;
+  }
+
   confirm() {
     if (this.props.capture.imagePath) {
       console.log(this.props.capture.imagePath);
@@ -110,9 +117,7 @@ class Capture extends React.Component {
           'Content-Type': 'application/json',
           'Ocp-Apim-Subscription-Key': '6f78b17610934d4d92064d76d5ba6d19'
         },
-        body: JSON.stringify({
-          url: 'http://r.ddmcdn.com/s_f/o_1/cx_633/cy_0/cw_1725/ch_1725/w_720/APL/uploads/2014/11/too-cute-doggone-it-video-playlist.jpg'
-        })
+        body: this.getImageFormData(this.props.capture.imagePath)
       }).then((response) => response.json())
       .then((responseJson) => {
         return console.log(responseJson);
