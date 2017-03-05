@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import {
   View,
@@ -6,7 +7,8 @@ import {
   TouchableOpacity,
   ListView,
   Image,
-  AsyncStorage
+  AsyncStorage,
+  StatusBar
 } from 'react-native';
 import { setSelectedPicture } from '../actions';
 
@@ -45,12 +47,27 @@ class History extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', backgroundColor: '#fff' }}>
-        <View style={{ paddingTop: 20, height: 60, backgroundColor: 'gray' }}>
-          <TouchableOpacity
-            onPress={this.props.navigator.pop}
-            >
-            <Text>back</Text>
-          </TouchableOpacity>
+        <StatusBar
+          animated={true}
+          barStyle="light-content"
+        />
+        <View
+          style={{ height: 20, backgroundColor: '#34495e' }}
+        />
+        <View style={{ height: 40, backgroundColor: '#34495e', alignItems: 'center', flexDirection: 'row' }}>
+          <View style={{ flex: 1 }}>
+            <TouchableOpacity
+              onPress={this.props.navigator.pop}
+              >
+              <Text style={{ color: '#ecf0f1', fontSize: 18, fontWeight: '500', padding: 8 }}>back</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex: 3, alignItems: 'center' }}>
+            <Text style={{ color: '#ecf0f1', fontSize: 18, fontWeight: '600', padding: 8 }}>History</Text>
+          </View>
+          <View style={{ flex: 1 }}>
+
+          </View>
         </View>
 
         <ListView
@@ -78,7 +95,7 @@ class History extends React.Component {
           />
           <View style={{ marginTop: 10, marginRight: 10 }}>
             <Text style={{ fontWeight: '500', fontSize: 20 }}>{data.name || 'no name'}</Text>
-            <Text style={{ fontSize: 16 }}>{data.date || 'no date'}</Text>
+            <Text style={{ fontSize: 16 }}>{moment(data.date).format('LLL') || 'no date'}</Text>
           </View>
         </View>
       </TouchableOpacity>

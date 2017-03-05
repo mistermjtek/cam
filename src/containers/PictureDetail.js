@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import {
   View,
@@ -30,20 +31,20 @@ class PictureDetail extends React.Component {
           onLayout={ev => this.scrollViewHeight = ev.nativeEvent.layout.height}
           >
           <View style={{ height }} />
-          <View style={{ height: height / 3, borderWidth: 1, backgroundColor: 'rgba(0, 0, 0, 0.8)' }}>
+          <View style={{ height: height / 3, borderWidth: 1, backgroundColor: 'rgba(0, 0, 0, 0.8)', padding: 8 }}>
             <TouchableOpacity
               onPress={() => {
                 if (this.props.lastView === 'Capture') {
-                  this.props.navigator.resetTo({ title: 'Menu' });                  
+                  this.props.navigator.resetTo({ title: 'Menu' });
                 } else {
                   this.props.navigator.pop();
                 }
               }}
               >
-              <Text style={{ color: '#fff' }}>back</Text>
+              <Text style={{ color: '#ecf0f1', fontSize: 18, fontWeight: '500', padding: 8, paddingLeft: 0, paddingTop: 0 }}>back</Text>
             </TouchableOpacity>
-            <Text style={{ color: '#fff' }}>{name}</Text>
-            <Text style={{ color: '#fff' }}>{date}</Text>
+            <Text style={{ color: '#ecf0f1', fontSize: 18, fontWeight: '500' }}>{name}</Text>
+            <Text style={{ color: '#ecf0f1', fontSize: 18, fontWeight: '500' }}>{moment(date).format('LLL')}</Text>
           </View>
         </ScrollView>
       </View>

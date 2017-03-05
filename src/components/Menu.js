@@ -6,7 +6,8 @@ import {
   Image,
   Easing,
   Animated,
-  Dimensions
+  Dimensions,
+  StatusBar
 } from 'react-native';
 
 let { height, width } = Dimensions.get('window');
@@ -30,6 +31,10 @@ export default class Menu extends React.Component {
 
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <StatusBar
+          animated={true}
+          barStyle="dark-content"
+        />
         <Text style={{ fontSize: 50, marginBottom: 20 }}>CAM</Text>
         <View style={{ width, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
           <TouchableOpacity
