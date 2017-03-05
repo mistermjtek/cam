@@ -149,7 +149,7 @@ class Capture extends React.Component {
             this.props.setState({ fetchingData: false });
             storeObj.date += '';
             this.props.setSelectedPicture(storeObj);
-            this.props.navigator.push({ title: 'PictureDetail' });
+            this.props.navigator.push({ title: 'PictureDetail', lastView: 'Capture' });
           });
         })
         .catch((error) => {

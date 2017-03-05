@@ -33,7 +33,7 @@ export default class Main extends React.Component {
           configureScene={this.configureScene}
           renderScene={(route, navigator) => {
             let Component = ROUTES[route.title];
-            return (<Component navigator={navigator} />);
+            return (<Component navigator={navigator} lastView={route.lastView} />);
           }}
         />
       </Provider>

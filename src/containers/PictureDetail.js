@@ -32,7 +32,13 @@ class PictureDetail extends React.Component {
           <View style={{ height }} />
           <View style={{ height: height / 3, borderWidth: 1, backgroundColor: 'rgba(0, 0, 0, 0.8)' }}>
             <TouchableOpacity
-              onPress={this.props.navigator.pop}
+              onPress={() => {
+                if (this.props.lastView === 'Capture') {
+                  this.props.navigator.resetTo({ title: 'Menu' });                  
+                } else {
+                  this.props.navigator.pop();
+                }
+              }}
               >
               <Text style={{ color: '#fff' }}>back</Text>
             </TouchableOpacity>
