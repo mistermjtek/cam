@@ -43,7 +43,7 @@ export default class Menu extends React.Component {
           barStyle="light-content"
         />
         <View style={styles.logoContainer}>
-        <Text style={styles.logo}>CAM</Text>
+        <Text style={styles.logo}>JAMCAM</Text>
         <Text style={styles.title}>Take a picture and translate it to a different language</Text>
         </View>
         <View style={styles.buttonContainer}>
@@ -102,9 +102,10 @@ const styles = StyleSheet.create({
     color: '#FFF'
   },
   title: {
+    fontSize: 18,
     color: '#FFF',
     marginTop: 10,
-    width: 180,
+    width: 250,
     textAlign: 'center'
   },
   buttonContainer: {
