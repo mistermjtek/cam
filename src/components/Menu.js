@@ -7,7 +7,8 @@ import {
   Easing,
   Animated,
   Dimensions,
-  StyleSheet
+  StyleSheet,
+  StatusBar
 } from 'react-native';
 
 let { height, width } = Dimensions.get('window');
@@ -31,26 +32,34 @@ export default class Menu extends React.Component {
 
     return (
       <View style={styles.container}>
+        <StatusBar
+          animated={true}
+          barStyle="dark-content"
+        />
+        <View style={styles.logoContainer}>
         <Text style={styles.logo}>CAM</Text>
         <Text style={styles.title}>Take a picture and find out the price</Text>
-        <View style={styles.logoContainer}>
-          <TouchableOpacity
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity 
             onPress={() => this.props.navigator.push({ title: 'Capture' })}
-            >
+            style={styles.buttonStyle}>
             <Animated.Image
-              style={{ height: 100, width: 100, transform: [{ scale: this.state.cameraScale }] }}
+              style={{ height: 30, width: 30, transform: [{ scale: this.state.cameraScale }] }}
               source={require('../assets/camera.png')}
             />
+            <Text style={styles.buttonText}>Take a Photo</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.props.navigator.push({ title: 'History' })}
-            >
+            style={styles.buttonStyle}>
             <Animated.Image
-              style={{ height: 100, width: 100, transform: [{ rotate: clockRotation }, { scale: this.state.clockScale }] }}
+              style={{ height: 30, width: 30, transform: [{ rotate: clockRotation }, { scale: this.state.clockScale }] }}
               source={require('../assets/history.png')}
             />
+            <Text style={styles.buttonText}>View Photo History</Text>
           </TouchableOpacity>
-        </View>
+          </View>
       </View>
     );
   }
@@ -82,20 +91,35 @@ const styles = StyleSheet.create({
     backgroundColor: '#34495e'
   },
   logoContainer: { 
-    width, 
-    flexDirection: 'row', 
     justifyContent: 'center', 
     alignItems: 'center',
     flexGrow: 1
   },
   logo: {
     fontSize: 50, 
-    marginBottom: 20 
+    marginBottom: 20,
+    color: '#FFF'
   },
   title: {
     color: '#FFF',
     marginTop: 10,
     width: 160,
     textAlign: 'center'
+  },
+  buttonContainer: {
+    padding: 20,
+  },
+  buttonStyle: {
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    height: 60,
+    marginBottom: 25,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    paddingVertical: 15,
+    borderRadius: 10
+  },
+  buttonText: {
+    fontSize: 20,
+    color: '#FFF'
   }
 })
