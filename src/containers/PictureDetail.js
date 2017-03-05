@@ -8,7 +8,8 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  TextInput
 } from  'react-native';
 
 import ModalPicker from 'react-native-modal-picker';
@@ -20,17 +21,18 @@ class PictureDetail extends React.Component {
     super(props);
     this.state = {
       translation: '',
-      selectedCountry: 'ru'
+      selectedCountry: 'ru',
+      languageLabel: ''
     }
   }
 
   componentDidMount() {
     setTimeout(() => this.scrollToBottom(), 100);
 
-    this.fetchTranslate(this.state.selectedCountry, this.props.selectedPicture.name);
+    this.fetchTranslate(this.state.selectedCountry);
   }
 
-  fetchTranslate(country, text) {
+  fetchTranslate(country) {
     fetch('https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=' + country + '&hl=' + country+ '&dt=t&dt=bd&dj=1&source=icon&tk=467103.467103&q=' + this.props.selectedPicture.name)
     .then(res => {
       if (res.status >= 200 && res.status < 300) {
@@ -48,23 +50,29 @@ class PictureDetail extends React.Component {
     });
   }
 
+  onUpdate(option) {
+      console.log(option);
+      this.setState({selectedCountry: option.value}, () => {
+        this.fetchTranslate(this.state.selectedCountry);
+        this.setState({languageLabel: option.label});
+      });
+    }
+
   render() {
 
         let index = 0;
         const data = [
             { key: index++, label: 'Russian', value: 'ru' },
-            { key: index++, label: 'Chinese', value: 'ch'},
-            { key: index++, label: 'Japanese', value: 'ja' }
+            { key: index++, label: 'Chinese', value: 'zh-tw'},
+            { key: index++, label: 'Japanese', value: 'ja' },
+            { key: index++, label: 'Dutch', value: 'nl' },
         ];
+
+        let label = this.state.languageLabel;
 
     let { name, date, imagePath } = this.props.selectedPicture;
     let { translation } = this.state;
     // var translation = this.state.translation;
-
-    const onUpdate = (option) => {
-      this.setState({selectedCountry: option.value});
-      this.fetchTranslate(this.state.selectedCountry);
-    }
 
     return (
       <View style={{ backgroundColor: 'white' }}>
@@ -91,15 +99,18 @@ class PictureDetail extends React.Component {
               >
               <Text style={{ color: '#ecf0f1', fontSize: 18, fontWeight: '500', padding: 8, paddingLeft: 0, paddingTop: 0 }}>back</Text>
               </TouchableOpacity>
-              <View style={{flex:1, justifyContent:'space-around', padding:50}}>
- 
                 <ModalPicker
+                style={{color: '#FFF'}}
                     data={data}
                     initValue="Select a language!"
-                    onChange={(option)=>{ onUpdate(option) }}>
-                        
+                    onChange={(option)=>{ this.onUpdate(option) }}>
+                       <TextInput
+                        style={{borderWidth:1, borderColor:'#FFF', color: '#FFF', padding:10, height:30}}
+                        editable={false}
+                        placeholder='Select a language!'
+                        placeholderTextColor='#FFF'
+                        value={label} />
                 </ModalPicker>
-            </View>
 
             <Text style={{ color: '#ecf0f1', fontSize: 18, fontWeight: '500' }}>{name}</Text>
             <Text style={{ color: '#ecf0f1', fontSize: 18, fontWeight: '500' }}>{moment(date).format('LLL')}</Text>

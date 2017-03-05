@@ -71,7 +71,7 @@ class History extends React.Component {
         >
         <View style={{ flexDirection: 'row' }}>
           <Image
-            source={{ uri: '' }}
+            source={{ uri: data.imagePath }}
             style={{ borderWidth: 1, height: 80, width: 80, margin: 10, borderRadius: 15}}
           />
           <View style={{ marginTop: 10, marginRight: 10 }}>

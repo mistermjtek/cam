@@ -44,7 +44,7 @@ export default class Menu extends React.Component {
         />
         <View style={styles.logoContainer}>
         <Text style={styles.logo}>CAM</Text>
-        <Text style={styles.title}>Take a picture and find out the price</Text>
+        <Text style={styles.title}>Take a picture and translate it to a different language</Text>
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity 
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#FFF',
     marginTop: 10,
-    width: 160,
+    width: 180,
     textAlign: 'center'
   },
   buttonContainer: {
