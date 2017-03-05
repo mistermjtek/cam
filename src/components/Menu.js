@@ -6,7 +6,8 @@ import {
   Image,
   Easing,
   Animated,
-  Dimensions
+  Dimensions,
+  StyleSheet
 } from 'react-native';
 
 let { height, width } = Dimensions.get('window');
@@ -29,9 +30,10 @@ export default class Menu extends React.Component {
     })
 
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ fontSize: 50, marginBottom: 20 }}>CAM</Text>
-        <View style={{ width, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+      <View style={styles.container}>
+        <Text style={styles.logo}>CAM</Text>
+        <Text style={styles.title}>Take a picture and find out the price</Text>
+        <View style={styles.logoContainer}>
           <TouchableOpacity
             onPress={() => this.props.navigator.push({ title: 'Capture' })}
             >
@@ -73,3 +75,27 @@ export default class Menu extends React.Component {
     }, 200);
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#34495e'
+  },
+  logoContainer: { 
+    width, 
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    alignItems: 'center',
+    flexGrow: 1
+  },
+  logo: {
+    fontSize: 50, 
+    marginBottom: 20 
+  },
+  title: {
+    color: '#FFF',
+    marginTop: 10,
+    width: 160,
+    textAlign: 'center'
+  }
+})
