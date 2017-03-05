@@ -70,7 +70,6 @@ const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 class History extends React.Component {
 
   componentWillMount() {
-
      AsyncStorage.getAllKeys((err, keys) => {
       AsyncStorage.multiGet(keys, (err, stores) => {
         stores.map((result, i, store) => {
@@ -78,8 +77,13 @@ class History extends React.Component {
           let key = store[i][0];
           let value = store[i][1];
         });
-        console.log(stores);
-        return stores;
+
+        var reformattedStore = stores.map(function(value, index, array) {
+          let rObj = JSON.parse(value[1]);
+          return rObj;
+        });
+        console.log(reformattedStore);
+        return reformattedStore;
       });
     });
     
