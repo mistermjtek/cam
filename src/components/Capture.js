@@ -1,6 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import shortid from 'shortid';
 import {
   View,
   StyleSheet,
@@ -8,7 +9,8 @@ import {
   Image,
   Animated,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from 'react-native';
 
 import Camera from 'react-native-camera';
@@ -114,12 +116,32 @@ return formData;
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
           'Ocp-Apim-Subscription-Key': '6f78b17610934d4d92064d76d5ba6d19'
         },
         body: this.getImageFormData(this.props.capture.imagePath)
       }).then((response) => response.json())
       .then((responseJson) => {
+        let storeObj = {'id': shortid.generate(), 'date': new Date(), 'name': responseJson.description.captions[0].text, imagePath: this.props.capture.imagePath};
+        AsyncStorage.setItem(storeObj.id, JSON.stringify(storeObj), function(err) {
+          console.log(err);
+          if (err) {
+            alert('Error storing values in local store');
+          } 
+        });
+
+          // if (!result) {
+          //   AsyncStorage.setItem('data', JSON.stringify(storeObj), function() {
+          //     alert('Error storing into empty store');
+          //   })
+          // } else {
+          //   console.log('storeObj', storeObj);
+          //   AsyncStorage.setItem('data', result, () => {
+          //     alert('Error storing data to existing data store');
+          //   })
+          // }
+        // })
+        
         return console.log(responseJson);
       })
       .catch((error) => {
