@@ -10,64 +10,17 @@ import {
 } from 'react-native';
 import { setSelectedPicture } from '../actions';
 
-const data = [
-  {
-    name: 'sfsad',
-    date: '423534',
-    image: 'asgdaf'
-  },
-  {
-    name: 'dfgdsasdf',
-    date: '64534',
-    image: 'dsfgd'
-  },
-  {
-    name: 'sadfsag',
-    date: '543563',
-    image: 'dsfgsdf'
-  },
-  {
-    name: 'dfdsfg',
-    date: '34563',
-    image: 'sdfgds'
-  },
-  {
-    name: 'dfgdsfg',
-    date: '3456434',
-    image: 'dsfgsdf'
-  },
-  {
-    name: 'sfsad',
-    date: '423534',
-    image: 'asgdaf'
-  },
-  {
-    name: 'dfgdsasdf',
-    date: '64534',
-    image: 'dsfgd'
-  },
-  {
-    name: 'sadfsag',
-    date: '543563',
-    image: 'dsfgsdf'
-  },
-  {
-    name: 'dfdsfg',
-    date: '34563',
-    image: 'sdfgds'
-  },
-  {
-    name: 'dfgdsfg',
-    date: '3456434',
-    image: 'dsfgsdf'
-  }
-];
-
-
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 class History extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: []
+    };
+  }
 
   componentWillMount() {
      AsyncStorage.getAllKeys((err, keys) => {
@@ -83,7 +36,7 @@ class History extends React.Component {
           return rObj;
         });
         console.log(reformattedStore);
-        return reformattedStore;
+        this.setState({data: reformattedStore});
       });
     });
     
@@ -101,7 +54,7 @@ class History extends React.Component {
         </View>
 
         <ListView
-          dataSource={ds.cloneWithRows(data)}
+          dataSource={ds.cloneWithRows(this.state.data)}
           renderRow={this.renderRow}
           renderSeparator={this.renderSeparator}
         />
