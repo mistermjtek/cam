@@ -103,10 +103,10 @@ class Capture extends React.Component {
   }
 
   getImageFormData(img) {
-const formData = new FormData();
+    const formData = new FormData();
 
-formData.append("file", { uri: img, type: "image/jpg" });
-return formData;
+    formData.append("file", { uri: img, type: "image/jpg" });
+    return formData;
   }
 
   confirm() {

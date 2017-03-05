@@ -5,7 +5,8 @@ import {
   Text,
   TouchableOpacity,
   ListView,
-  Image
+  Image,
+  AsyncStorage
 } from 'react-native';
 import { setSelectedPicture } from '../actions';
 
@@ -67,6 +68,23 @@ const data = [
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 class History extends React.Component {
+
+  componentWillMount() {
+
+     AsyncStorage.getAllKeys((err, keys) => {
+      AsyncStorage.multiGet(keys, (err, stores) => {
+        stores.map((result, i, store) => {
+        // get at each store's key/value so you can work with it
+          let key = store[i][0];
+          let value = store[i][1];
+        });
+        console.log(stores);
+        return stores;
+      });
+    });
+    
+  }
+
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', backgroundColor: '#fff' }}>
