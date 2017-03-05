@@ -36,7 +36,7 @@ export default class Menu extends React.Component {
             onPress={() => this.props.navigator.push({ title: 'Capture' })}
             >
             <Animated.Image
-              style={{ height: 100, width: 100, transform: [{ scale: this.state.cameraScale }] }}
+              style={{ height: 90, width: 90, transform: [{ scale: this.state.cameraScale }] }}
               source={require('../assets/camera.png')}
             />
           </TouchableOpacity>
