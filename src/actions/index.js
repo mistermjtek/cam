@@ -17,6 +17,7 @@ function setCaptureState(state) {
 }
 
 function setSelectedPicture(picture) {
+  console.log('PICTURE', picture)
   return {
     type: SET_SELECTED_PICTURE,
     payload: picture

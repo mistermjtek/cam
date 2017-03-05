@@ -5,8 +5,11 @@ import {
   TouchableOpacity,
   Image,
   Easing,
-  Animated
+  Animated,
+  Dimensions
 } from 'react-native';
+
+let { height, width } = Dimensions.get('window');
 
 export default class Menu extends React.Component {
   constructor(props) {
@@ -26,23 +29,26 @@ export default class Menu extends React.Component {
     })
 
     return (
-      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-        <TouchableOpacity
-          onPress={() => this.props.navigator.push({ title: 'Capture' })}
-          >
-          <Animated.Image
-            style={{ height: 100, width: 100, transform: [{ scale: this.state.cameraScale }] }}
-            source={require('../assets/camera.png')}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.props.navigator.push({ title: 'History' })}
-          >
-          <Animated.Image
-            style={{ height: 100, width: 100, transform: [{ rotate: clockRotation }, { scale: this.state.clockScale }] }}
-            source={require('../assets/history.png')}
-          />
-        </TouchableOpacity>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ fontSize: 50, marginBottom: 20 }}>CAM</Text>
+        <View style={{ width, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+          <TouchableOpacity
+            onPress={() => this.props.navigator.push({ title: 'Capture' })}
+            >
+            <Animated.Image
+              style={{ height: 100, width: 100, transform: [{ scale: this.state.cameraScale }] }}
+              source={require('../assets/camera.png')}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigator.push({ title: 'History' })}
+            >
+            <Animated.Image
+              style={{ height: 100, width: 100, transform: [{ rotate: clockRotation }, { scale: this.state.clockScale }] }}
+              source={require('../assets/history.png')}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

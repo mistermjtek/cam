@@ -10,13 +10,15 @@ import {
   Animated,
   Dimensions,
   TouchableOpacity,
-  AsyncStorage
+  AsyncStorage,
+  ActivityIndicator,
+  Modal
 } from 'react-native';
 
 import Camera from 'react-native-camera';
 
 let { height, width } = Dimensions.get('window');
-import { setCaptureState } from '../actions';
+import { setCaptureState, setSelectedPicture } from '../actions';
 
 class Capture extends React.Component {
   componentWillMount() {
@@ -24,6 +26,7 @@ class Capture extends React.Component {
   }
 
   render() {
+    console.log('this.props.capture.fetchingData', this.props.capture.fetchingData)
     let { imagePath } = this.props.capture;
     let Background = imagePath ? (
       <Image
@@ -70,6 +73,19 @@ class Capture extends React.Component {
             </TouchableOpacity>
           </View>
         </View>
+        <Modal
+          visible={this.props.capture.fetchingData === true}
+          animationType="fade"
+          style={{ flex: 1 }}
+          transparent={true}
+          >
+          <View style={{ flex: 1, backgroundColor: 'rgba(255, 255, 255, 0.5)', justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator
+              animating={true}
+              size="large"
+            />
+          </View>
+        </Modal>
       </View>
     );
   }
@@ -111,7 +127,9 @@ class Capture extends React.Component {
 
   confirm() {
     if (this.props.capture.imagePath) {
-      console.log(this.props.capture.imagePath);
+      this.props.setState({ fetchingData: true });
+      this.props.setSelectedPicture(null)
+      this
       fetch('https://westus.api.cognitive.microsoft.com/vision/v1.0/analyze?visualFeatures=Categories,Description', {
         method: 'POST',
         headers: {
@@ -120,33 +138,23 @@ class Capture extends React.Component {
           'Ocp-Apim-Subscription-Key': '6f78b17610934d4d92064d76d5ba6d19'
         },
         body: this.getImageFormData(this.props.capture.imagePath)
-      }).then((response) => response.json())
-      .then((responseJson) => {
-        let storeObj = {'id': shortid.generate(), 'date': new Date(), 'name': responseJson.description.captions[0].text, imagePath: this.props.capture.imagePath};
-        AsyncStorage.setItem(storeObj.id, JSON.stringify(storeObj), function(err) {
-          console.log(err);
-          if (err) {
-            alert('Error storing values in local store');
-          } 
-        });
-
-          // if (!result) {
-          //   AsyncStorage.setItem('data', JSON.stringify(storeObj), function() {
-          //     alert('Error storing into empty store');
-          //   })
-          // } else {
-          //   console.log('storeObj', storeObj);
-          //   AsyncStorage.setItem('data', result, () => {
-          //     alert('Error storing data to existing data store');
-          //   })
-          // }
-        // })
-        
-        return console.log(responseJson);
       })
-      .catch((error) => {
-        console.error(error);
-      });
+        .then((response) => response.json())
+        .then((responseJson) => {
+          let storeObj = {'id': shortid.generate(), 'date': new Date(), 'name': responseJson.description.captions[0].text, imagePath: this.props.capture.imagePath};
+          AsyncStorage.setItem(storeObj.id, JSON.stringify(storeObj), err => {
+            if (err) {
+              alert('Error storing values in local store');
+            }
+            this.props.setState({ fetchingData: false });
+            storeObj.date += '';
+            this.props.setSelectedPicture(storeObj);
+            this.props.navigator.push({ title: 'PictureDetail' });
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   }
 }
@@ -204,7 +212,8 @@ function mapStateToProps({ capture }) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    setState: setCaptureState
+    setState: setCaptureState,
+    setSelectedPicture
   }, dispatch);
 }
 

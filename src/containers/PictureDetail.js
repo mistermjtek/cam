@@ -6,7 +6,8 @@ import {
   Text,
   Dimensions,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from  'react-native';
 
 let { height, width } = Dimensions.get('window');
@@ -14,14 +15,20 @@ let { height, width } = Dimensions.get('window');
 
 class PictureDetail extends React.Component {
   render() {
-    let { name, date, image } = this.props.selectedPicture;
+    let { name, date, imagePath } = this.props.selectedPicture;
+
     return (
       <View style={{ backgroundColor: 'white' }}>
         <Image
           style={{ height, width, position: 'absolute' }}
-          source={{ uri: 'https://www.moviepostersusa.com/media/catalog/product/p/1/p104_1.jpg' }}
+          source={{ uri: imagePath }}
         />
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          ref={ref => this.scrollView = ref}
+          onContentSizeChange={(w, h) => this.contentHeight = h}
+          onLayout={ev => this.scrollViewHeight = ev.nativeEvent.layout.height}
+          >
           <View style={{ height }} />
           <View style={{ height: height / 3, borderWidth: 1, backgroundColor: 'rgba(0, 0, 0, 0.8)' }}>
             <TouchableOpacity
@@ -35,6 +42,20 @@ class PictureDetail extends React.Component {
         </ScrollView>
       </View>
     );
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.scrollToBottom(), 100);
+  }
+
+  scrollToBottom = () => {
+    console.log('scrolling')
+    const scrollHeight = this.contentHeight - this.scrollViewHeight;
+    console.log('SCROLLHEIGHT', scrollHeight)
+
+    if (scrollHeight > 0) {
+      this.scrollView.scrollTo({ x: 0, y: scrollHeight, animated: true });
+    }
   }
 }
 

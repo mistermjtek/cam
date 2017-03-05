@@ -39,7 +39,7 @@ class History extends React.Component {
         this.setState({data: reformattedStore});
       });
     });
-    
+
   }
 
   render() {
@@ -54,6 +54,7 @@ class History extends React.Component {
         </View>
 
         <ListView
+          enableEmptySections={true}
           dataSource={ds.cloneWithRows(this.state.data)}
           renderRow={this.renderRow}
           renderSeparator={this.renderSeparator}
@@ -72,8 +73,8 @@ class History extends React.Component {
         >
         <View style={{ flexDirection: 'row' }}>
           <Image
-            source={{ uri: '' }}
-            style={{ borderWidth: 1, height: 80, width: 80, margin: 10 }}
+            source={{ uri: data.imagePath }}
+            style={{ height: 80, width: 80, margin: 10, borderRadius: 2 }}
           />
           <View style={{ marginTop: 10, marginRight: 10 }}>
             <Text style={{ fontWeight: '500', fontSize: 20 }}>{data.name || 'no name'}</Text>

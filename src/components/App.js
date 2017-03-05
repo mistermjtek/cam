@@ -9,8 +9,8 @@ import { createStore, applyMiddleware } from 'redux';
 
 import rootReducer from '../reducers';
 import Menu from './Menu';
-import Capture from './Capture';
 import History from './History';
+import Capture from '../containers/Capture';
 import PictureDetail from '../containers/PictureDetail';
 
 const ROUTES = {
