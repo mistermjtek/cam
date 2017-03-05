@@ -17,7 +17,7 @@ export default class Menu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cameraScale: new Animated.Value(0.1),
+      cameraScale: new Animated.Value(0.3),
       clockScale: new Animated.Value(0.1),
       clockRotation: new Animated.Value(0)
     };
@@ -29,6 +29,12 @@ export default class Menu extends React.Component {
       inputRange: [0, 1],
       outputRange: ['360deg', '0deg']
     })
+
+    var animatedImageStyle = StyleSheet.flatten([ 
+      styles.buttonStyle, {
+        transform: [{ scale: this.state.cameraScale }]
+      }
+    ])
 
     return (
       <View style={styles.container}>
@@ -43,20 +49,14 @@ export default class Menu extends React.Component {
         <View style={styles.buttonContainer}>
           <TouchableOpacity 
             onPress={() => this.props.navigator.push({ title: 'Capture' })}
-            style={styles.buttonStyle}>
-            <Animated.Image
-              style={{ height: 30, width: 30, transform: [{ scale: this.state.cameraScale }] }}
-              source={require('../assets/camera.png')}
-            />
+            style={animatedImageStyle}>
+            
             <Text style={styles.buttonText}>Take a Photo</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.props.navigator.push({ title: 'History' })}
-            style={styles.buttonStyle}>
-            <Animated.Image
-              style={{ height: 30, width: 30, transform: [{ rotate: clockRotation }, { scale: this.state.clockScale }] }}
-              source={require('../assets/history.png')}
-            />
+            style={animatedImageStyle}>
+
             <Text style={styles.buttonText}>View Photo History</Text>
           </TouchableOpacity>
           </View>
@@ -84,6 +84,7 @@ export default class Menu extends React.Component {
     }, 200);
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
