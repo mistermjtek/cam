@@ -40,7 +40,7 @@ export default class Menu extends React.Component {
       <View style={styles.container}>
         <StatusBar
           animated={true}
-          barStyle="dark-content"
+          barStyle="light-content"
         />
         <View style={styles.logoContainer}>
         <Text style={styles.logo}>CAM</Text>
@@ -89,7 +89,7 @@ export default class Menu extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#34495e'
+    backgroundColor: '#364F6B'
   },
   logoContainer: { 
     justifyContent: 'center', 
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   buttonStyle: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: '#3FC1C9',
     height: 60,
     marginBottom: 25,
     justifyContent: 'center',
@@ -121,6 +121,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 20,
-    color: '#FFF'
+    color: '#F5F5F5'
   }
 })

@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import {
   View,
@@ -7,8 +6,7 @@ import {
   TouchableOpacity,
   ListView,
   Image,
-  AsyncStorage,
-  StatusBar
+  AsyncStorage
 } from 'react-native';
 import { setSelectedPicture } from '../actions';
 
@@ -41,37 +39,20 @@ class History extends React.Component {
         this.setState({data: reformattedStore});
       });
     });
-
   }
 
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', backgroundColor: '#fff' }}>
-        <StatusBar
-          animated={true}
-          barStyle="light-content"
-        />
-        <View
-          style={{ height: 20, backgroundColor: '#34495e' }}
-        />
-        <View style={{ height: 40, backgroundColor: '#34495e', alignItems: 'center', flexDirection: 'row' }}>
-          <View style={{ flex: 1 }}>
-            <TouchableOpacity
-              onPress={this.props.navigator.pop}
-              >
-              <Text style={{ color: '#ecf0f1', fontSize: 18, fontWeight: '500', padding: 8 }}>back</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex: 3, alignItems: 'center' }}>
-            <Text style={{ color: '#ecf0f1', fontSize: 18, fontWeight: '600', padding: 8 }}>History</Text>
-          </View>
-          <View style={{ flex: 1 }}>
-
-          </View>
+      <View style={{ flex: 1, justifyContent: 'center', backgroundColor: '#F5F5F5' }}>
+        <View style={{ paddingTop: 20, height: 60, backgroundColor: '#364F6B' }}>
+          <TouchableOpacity
+            onPress={this.props.navigator.pop}
+            >
+            <Image style={{height:30, width:30}} source={require('../assets/chevron-left.png')}></Image>
+          </TouchableOpacity>
         </View>
 
         <ListView
-          enableEmptySections={true}
           dataSource={ds.cloneWithRows(this.state.data)}
           renderRow={this.renderRow}
           renderSeparator={this.renderSeparator}
@@ -90,12 +71,12 @@ class History extends React.Component {
         >
         <View style={{ flexDirection: 'row' }}>
           <Image
-            source={{ uri: data.imagePath }}
-            style={{ height: 80, width: 80, margin: 10, borderRadius: 2 }}
+            source={{ uri: '' }}
+            style={{ borderWidth: 1, height: 80, width: 80, margin: 10, borderRadius: 15}}
           />
           <View style={{ marginTop: 10, marginRight: 10 }}>
             <Text style={{ fontWeight: '500', fontSize: 20 }}>{data.name || 'no name'}</Text>
-            <Text style={{ fontSize: 16 }}>{moment(data.date).format('LLL') || 'no date'}</Text>
+            <Text style={{ fontSize: 16 }}>{data.date || 'no date'}</Text>
           </View>
         </View>
       </TouchableOpacity>
