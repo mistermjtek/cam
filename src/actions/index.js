@@ -1,5 +1,6 @@
 const SET_APP = 'SET_APP';
 const SET_CAPTURE_STATE = 'SET_CAPTURE_STATE';
+const SET_SELECTED_PICTURE = 'SET_SELECTED_PICTURE';
 
 function setApp(state) {
   return {
@@ -15,9 +16,18 @@ function setCaptureState(state) {
   };
 }
 
+function setSelectedPicture(picture) {
+  return {
+    type: SET_SELECTED_PICTURE,
+    payload: picture
+  };
+}
+
 export {
   setApp,
   SET_APP,
   setCaptureState,
-  SET_CAPTURE_STATE
+  SET_CAPTURE_STATE,
+  setSelectedPicture,
+  SET_SELECTED_PICTURE
 };

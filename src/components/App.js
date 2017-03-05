@@ -11,11 +11,13 @@ import rootReducer from '../reducers';
 import Menu from './Menu';
 import Capture from './Capture';
 import History from './History';
+import PictureDetail from '../containers/PictureDetail';
 
 const ROUTES = {
   Menu,
   Capture,
-  History
+  History,
+  PictureDetail
 };
 
 const store = createStore(rootReducer);
