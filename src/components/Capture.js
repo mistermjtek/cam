@@ -1,6 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import shortid from 'shortid';
 import {
   View,
   StyleSheet,
@@ -8,7 +9,8 @@ import {
   Image,
   Animated,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from 'react-native';
 
 import Camera from 'react-native-camera';
@@ -100,6 +102,13 @@ class Capture extends React.Component {
     }).start();
   }
 
+  getImageFormData(img) {
+const formData = new FormData();
+
+formData.append("file", { uri: img, type: "image/jpg" });
+return formData;
+  }
+
   confirm() {
     if (this.props.capture.imagePath) {
       console.log(this.props.capture.imagePath);
@@ -107,14 +116,32 @@ class Capture extends React.Component {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
           'Ocp-Apim-Subscription-Key': '6f78b17610934d4d92064d76d5ba6d19'
         },
-        body: JSON.stringify({
-          url: 'http://r.ddmcdn.com/s_f/o_1/cx_633/cy_0/cw_1725/ch_1725/w_720/APL/uploads/2014/11/too-cute-doggone-it-video-playlist.jpg'
-        })
+        body: this.getImageFormData(this.props.capture.imagePath)
       }).then((response) => response.json())
       .then((responseJson) => {
+        let storeObj = {'id': shortid.generate(), 'date': new Date(), 'name': responseJson.description.captions[0].text, imagePath: this.props.capture.imagePath};
+        AsyncStorage.setItem(storeObj.id, JSON.stringify(storeObj), function(err) {
+          console.log(err);
+          if (err) {
+            alert('Error storing values in local store');
+          } 
+        });
+
+          // if (!result) {
+          //   AsyncStorage.setItem('data', JSON.stringify(storeObj), function() {
+          //     alert('Error storing into empty store');
+          //   })
+          // } else {
+          //   console.log('storeObj', storeObj);
+          //   AsyncStorage.setItem('data', result, () => {
+          //     alert('Error storing data to existing data store');
+          //   })
+          // }
+        // })
+        
         return console.log(responseJson);
       })
       .catch((error) => {
