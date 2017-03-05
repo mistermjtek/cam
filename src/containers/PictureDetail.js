@@ -87,7 +87,7 @@ class PictureDetail extends React.Component {
           onLayout={ev => this.scrollViewHeight = ev.nativeEvent.layout.height}
           >
           <View style={{ height }} />
-          <View style={{ height: height / 3, borderWidth: 1, backgroundColor: 'rgba(0, 0, 0, 0.8)', padding: 8 }}>
+          <View style={{ height: height / 3, borderWidth: 1, backgroundColor: 'rgba(0, 0, 0, 0.6)', padding: 8 }}>
             <TouchableOpacity
               onPress={() => {
                 if (this.props.lastView === 'Capture') {
